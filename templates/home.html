@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - PULSE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+
+<body>
+    {% include 'menu.html' %}
+
+    <div class="home-content">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Background Logo" class="background-logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo-image">
+            <div class="greeting">WELCOME, <span class="user-name">{{ username|upper }}</span>!</div>
+            <div class="welcome-message">
+                Access and manage your batch files easily with our streamlined interface.
+            </div>
+            <div class="action-buttons">
+                <a href="{{ url_for('dashboard') }}" class="btn">
+                    <i class="fas fa-th-large"></i> Go to Dashboard
+                </a>
+                <a href="{{ url_for('execution_history') }}" class="btn">
+                    <i class="fas fa-history"></i> View History
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <script src="/static/script/global.js"></script>
+</body>
+
+</html>

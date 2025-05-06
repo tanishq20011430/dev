@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Query - PULSE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/query_interface.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+</head>
+<body>
+    {% include 'menu.html' %}
+
+    <div class="content">
+        <div class="query-container">
+            <h2><i class="fas fa-database"></i> SQL Query Interface</h2>            <div class="schema-selector">
+                <label for="schemaSelect">Schema:</label>
+                <select id="schemaSelect" class="form-control">
+                    {% for schema in schemas %}
+                    <option value="{{ schema }}" {% if schema == default_schema %}selected{% endif %}>
+                        {{ schema }} {% if schema == default_schema %}(Default){% endif %}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <textarea id="queryInput" class="query-textarea" 
+                      placeholder="Enter your SELECT query here..."></textarea>
+            <div>
+                <button onclick="executeQuery()" class="btn">
+                    <i class="fas fa-play"></i> Execute Query
+                </button>
+            </div>
+        </div>
+        <div id="results" class="results-container"></div>
+    </div>
+
+     {% include 'footer.html' %}
+
+    <script src="/static/script/global.js" ></script>
+    <script src="/static/script/query_interface.js"></script>
+</body>
+</html>

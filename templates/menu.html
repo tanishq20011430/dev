@@ -1,0 +1,70 @@
+<div class="header">
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+        <span class="menu-label">Menu</span>
+    </button>
+
+    <div class="logo">
+        <a href="{{ url_for('home') }}">
+            <img src="/static/logo_1.png" alt="Logo" style="height: 60px;">
+        </a>
+    </div>
+
+    <div class="header-user-profile">
+        <button class="header-user-toggle" id="headerUserToggle">
+            <i class="fas fa-user-circle"></i>
+            <span>{{ username }}</span>
+            <i class="fas fa-caret-down"></i>
+        </button>
+        <div class="header-user-menu" id="headerUserMenu">
+            <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+
+    <div class="nav" id="mainNav">
+        <button class="menu-close" id="menuClose">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        <a href="{{ url_for('dashboard') }}"><i class="fas fa-th-large"></i> Dashboard</a>
+
+        {% if role == 'user' or role == 'admin' %}
+        <a href="{{ url_for('execution_history') }}"><i class="fas fa-history"></i> History</a>
+        <a href="{{ url_for('query_interface') }}"><i class="fas fa-database"></i> SQL Query</a>
+
+        <div class="predefined-queries-dropdown">
+            <div class="dropdown-toggle" id="predefinedQueriesDropdown">
+                <i class="fas fa-list"></i> <span>Predefined Queries</span>
+                <i class="fas fa-caret-down"></i>
+            </div>
+            <div class="dropdown-menu" id="predefinedQueriesMenu">
+                <a href="{{ url_for('execute_predefined_query', query_type='style_info') }}">
+                    <i class="fas fa-info-circle"></i> Style Information
+                </a>
+                <a href="{{ url_for('execute_predefined_query', query_type='inventory') }}">
+                    <i class="fas fa-box"></i> Current Inventory
+                </a>
+                <a href="{{ url_for('execute_predefined_query', query_type='recent_orders') }}">
+                    <i class="fas fa-clock"></i> Recent Orders
+                </a>
+                <a href="{{ url_for('execute_predefined_query', query_type='style_info') }}">
+                    <i class="fas fa-info-circle"></i> Style Information
+                </a>
+                <a href="{{ url_for('execute_predefined_query', query_type='inventory') }}">
+                    <i class="fas fa-box"></i> Current Inventory
+                </a>
+                <a href="{{ url_for('execute_predefined_query', query_type='recent_orders') }}">
+                    <i class="fas fa-clock"></i> Recent Orders
+                </a>
+
+            </div>
+        </div>
+        {% endif %}
+
+        {% if role == 'admin' %}
+        <a href="{{ url_for('manage_users') }}"><i class="fas fa-users"></i> Manage Users</a>
+        {% endif %}
+    </div>
+</div>
+<div class="menu-overlay" id="menuOverlay"></div>

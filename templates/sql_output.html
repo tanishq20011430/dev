@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Output - PULSE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sql_output.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <script>
+      window.CSV_URL = "{{ csv_url }}";
+    </script>
+</head>
+
+<body>
+    <div id="loadingOverlay" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2000;background:rgba(255,255,255,0.7);align-items:center;justify-content:center;">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+            <div class="spinner" style="border:6px solid #f3f3f3;border-top:6px solid #333;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;"></div>
+            <div style="margin-top:12px;font-size:18px;color:#333;">Loading...</div>
+        </div>
+    </div>
+
+    {% include 'menu.html' %}
+
+    <div class="content">
+        <div class="output-header">
+            <h2 class="output-title">
+                <i class="fas fa-table"></i> Query Results
+            </h2>
+            <div class="output-actions">
+                <button id="exportBtn" class="btn">
+                    <i class="fas fa-download"></i> Export Filtered Data
+                </button>
+                <button id="clearFiltersBtn" class="btn" style="background:#000000;">
+                    <i class="fas fa-times-circle"></i> Clear All Filters
+                </button>
+                <a href="{{ url_for('query_interface') }}" class="btn">
+                    <i class="fas fa-arrow-left"></i> Back to Query
+                </a>
+            </div>
+        </div>
+
+        <!-- Important/Quick Filters (example: Status, Date, etc.) -->
+        <div id="quickFilters" style="margin-bottom: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <!-- JS will populate quick filter chips here if needed -->
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        {% for column in columns %}
+                        <th>
+                            <span class="column-header" data-column="{{ column }}">
+                                {{ column }}
+                                <span class="sort-icons">
+                                    <i class="fas fa-sort-up sort-asc" data-column="{{ column }}"></i>
+                                    <i class="fas fa-sort-down sort-desc" data-column="{{ column }}"></i>
+                                </span>
+                                <span class="filter-icon" data-column="{{ column }}">
+                                    <i class="fas fa-filter"></i>
+                                </span>
+                            </span>
+                            <!-- Filter dropdown container -->
+                            <div class="filter-dropdown" data-column="{{ column }}" style="display:none; position:absolute; z-index:1000;"></div>
+                        </th>
+                        {% endfor %}
+                    </tr>
+                    <tr class="filter-row">
+                        {% for column in columns %}
+                        <th>
+                            <input type="text" class="filter-input" data-column="{{ column }}"
+                                placeholder="Filter {{ column }}...">
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data will be loaded here dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button id="prevPage" class="btn">
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+            <button id="nextPage" class="btn">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+     {% include 'footer.html' %}
+
+    <script src="/static/script/sql_output.js"></script>
+    <script src="/static/script/global.js"></script>
+    <script>
+        // Automatically delete the CSV file when the user leaves the page
+(function () {
+    // Extract filename from csv_url (should be passed from Flask)
+    var csvUrl = "{{ csv_url }}";
+    var csvFilename = csvUrl ? csvUrl.split('/').pop() : null;
+
+    function deleteTempCsv() {
+        if (!csvFilename) return;
+        var url = "/delete_temp_csv";
+        var data = JSON.stringify({ filename: csvFilename });
+        if (navigator.sendBeacon) {
+            var blob = new Blob([data], { type: 'application/json' });
+            navigator.sendBeacon(url, blob);
+        } else {
+            fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: data,
+                keepalive: true
+            });
+        }
+    }
+    window.addEventListener('beforeunload', deleteTempCsv);
+})();
+    </script>
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+    </style>
+</body>
+
+</html>

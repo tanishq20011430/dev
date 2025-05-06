@@ -1,0 +1,426 @@
+:root {
+            --primary: #000000;
+            --secondary: #000000;
+            --light: #f5f5f5;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        
+
+        .content {
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .folder-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .folder-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .folder-title i {
+            color: var(--secondary);
+            margin-right: 10px;
+        }
+
+        .file-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .file-list li {
+            background-color: var(--white);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .file-list li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .file-name {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-name i {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .run-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .run-btn i {
+            margin-right: 5px;
+        }
+
+        .run-btn:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Disabled button style */
+        .run-btn.disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            pointer-events: none;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #333333;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 8px;
+            width: 70%;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            border-radius: 8px 8px 0 0;
+            position: relative;
+        }
+
+        #modal-header.success {
+            background-color: #000000;
+            color: white;
+        }
+
+        #modal-header.error {
+            background-color: #130000;
+            color: white;
+        }
+
+        #modal-header.loading {
+            background-color: #000000;
+            color: white;
+        }
+
+        #result-content {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #result-output {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #eee;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .header .nav {
+                margin-top: 15px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .header .nav a {
+                margin: 5px;
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .folder-title {
+                font-size: 22px;
+            }
+
+            .file-list li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .run-btn {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+
+            .header .logo {
+                font-size: 16px;
+                /* Smaller on mobile */
+            }
+        }
+
+        /*popup */
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            text-align: right;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .ok-btn {
+            background-color: var(--secondary);
+            color: var(--white);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .ok-btn:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Download button styles */
+        #downloadOutputBtn {
+            background-color: var(--secondary);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        #downloadOutputBtn i {
+            margin-right: 5px;
+        }
+
+        #downloadOutputBtn:hover {
+            background-color: #333333;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Ensure buttons in modal footer align properly */
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Dropdown styles */
+        
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding-bottom: 60px;
+            /* Prevents content from being hidden behind footer */
+            background-color: var(--light);
+            color: var(--primary);
+            line-height: 1.6;
+            min-height: 100%;
+        }
+
+        /* .footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 15px px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .footer .copyright {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .footer .footer-logo {
+            margin-right: 10px;
+            height: 30px;
+        } */
+
+        @media (max-width: 768px) {
+            .footer {
+                padding: 5px 0;
+            }
+
+            .footer .copyright {
+                font-size: 10px;
+            }
+
+            .footer .footer-logo {
+                height: 16px;
+            }
+        }
+
+        /* running batch file  */
+        .loading-spinner {
+            display: inline-block;
+            margin-right: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Ensure the loading header aligns nicely */
+        #modal-header.loading {
+            display: flex;
+            align-items: center;
+            background-color: #000000;
+            color: white;
+        }
+        /*copywrite symbol adjustments*/
+        .copyright-symbol {
+            transform: translateY(-5px);
+            /* Moves the © upward by 5 pixels */
+            margin-right: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .copyright-symbol {
+                transform: translateY(-1px);
+                /* Less movement on mobile */
+                margin-right: 3px;
+            }
+        }
+
+        
