@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Users - PULSE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_manager.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    
+</head>
+
+<body>
+      {% include 'menu.html' %}
+    
+    <div class="content">
+        <div class="users-header">
+            <h2 class="users-title"><i class="fas fa-users"></i> Manage Users</h2>
+        </div>
+
+        {% if error %}
+        <div class="error-message">
+            <i class="fas fa-exclamation-circle"></i> {{ error }}
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <h3 class="card-title"><i class="fas fa-user-plus"></i> Add New User</h3>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role" class="form-label">Role:</label>
+                    <select id="role" name="role" class="form-control" required>
+                        <option value="guest">Guest - View only access</option>
+                        <option value="user">User - Can view and execute batch files</option>
+                        <option value="admin">Admin - Full management rights</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">
+                    <i class="fas fa-plus-circle"></i> Add User
+                </button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title"><i class="fas fa-user-friends"></i> Current Users</h3>
+
+            {% if users and users|length > 0 %}
+            <ul class="user-list">
+                {% for user in users %}
+                <li class="user-item">
+                    <div class="user-info">
+                        <div class="user-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <span class="user-name">{{ user.username }}</span>
+                            <span class="user-role role-{{ user.role }}">{{ user.role }}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Only show delete buttons if the current user is an admin -->
+                    {% if role == 'admin' %}
+                    <div class="user-actions">
+                        {% if user.username == 'admin' %}
+                        <div class="tooltip">
+                            <button class="btn btn-danger disabled-button">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <span class="tooltip-text">Cannot delete admin user</span>
+                        </div>
+                        {% elif user.username == username %}
+                        <div class="tooltip">
+                            <button class="btn btn-danger disabled-button">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <span class="tooltip-text">Cannot delete your own account</span>
+                        </div>
+                        {% else %}
+                        <button class="btn btn-danger delete-user" data-username="{{ user.username }}">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="empty-state">
+                <p>No users available.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+     {% include 'footer.html' %}
+    <script src="/static/script/manage_user.js"></script>
+    <script src="/static/script/global.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - PULSE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+</head>
+
+<body>
+      {% include 'menu.html' %}
+    <div class="content">
+        <div class="history-header">
+            <h2 class="history-title"><i class="fas fa-history"></i> Execution History</h2>
+        </div>
+
+        {% if error %}
+        <div class="error-message">
+            <i class="fas fa-exclamation-circle"></i> {{ error }}
+        </div>
+        {% endif %}
+
+        {% if history and history|length > 0 %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> Username</th>
+                        <th><i class="fas fa-bolt"></i> Action</th>
+                        <th><i class="fas fa-info-circle"></i> Details</th>
+                        <th><i class="fas fa-clock"></i> Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in history %}
+                    <tr>
+                        <td>{{ entry.username }}</td>
+                        <td>{{ entry.action }}</td>
+                        <td>{{ entry.details }}</td>
+                        <td>{{ entry.timestamp }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-calendar-times" style="font-size: 50px; opacity: 0.3; margin-bottom: 15px;"></i>
+            <p>No execution history available.</p>
+        </div>
+        {% endif %}
+    </div>
+     {% include 'footer.html' %}
+    <script src="/static/script/global.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - PULSE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/thankyou.css') }}">
+</head>
+<body>
+    <div class="thank-you-container">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo_1.1.png') }}" alt="Logo">
+        </div>
+        <div class="thank-you-title">
+            Thank You, <span class="user-name">{{ username }}</span>!
+        </div>
+        <div class="thank-you-message">
+            We appreciate your time with us.
+        </div>
+        <div class="namaste-icon">
+            <img src="{{ url_for('static', filename='thankyou.png') }}" alt="Logo" style="width: 1in; height: 1in;">
+        </div>
+        <div class="buttons">
+            <a href="{{ url_for('login') }}" class="btn">
+                <i class="fas fa-sign-in-alt"></i> Login Again
+            </a>
+            <button onclick="closeWindow()" class="btn">
+                <i class="fas fa-times"></i> Close Window
+            </button>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="copyright">
+            <span class="copyright-symbol">©</span>
+            <img src="{{ url_for('static', filename='image.png') }}" alt="Logo" class="footer-logo">
+            <span>2025 Maxima Apparel. All rights reserved.</span>
+        </div>
+    </div>
+    <script>
+        // Fallback for when window.close() is blocked by the browser
+        document.querySelector('button').addEventListener('click', function() {
+            if (!window.close()) {
+                alert('Unable to close window. Please close it manually.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder View - PULSE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/folder_view.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+</head>
+
+<body>
+      {% include 'menu.html' %}
+    <div class="content">
+        <div class="folder-header">
+            <h2 class="folder-title"><i class="fas fa-folder-open"></i> Folder: {{ folder_name }}</h2>
+        </div>
+
+        {% if batch_files and batch_files|length > 0 %}
+        <ul class="file-list">
+            {% for file in batch_files %}
+            <li>
+                <div class="file-name">
+                    <i class="fas fa-file-code"></i>
+                    {{ file }}
+                </div>
+                {% if is_guest %}
+                <div class="tooltip">
+                    <button class="run-btn disabled">
+                        <i class="fas fa-play"></i> Run
+                    </button>
+                    <span class="tooltip-text">Guest users cannot run batch files</span>
+                </div>
+                {% else %}
+                <button onclick="runBatchFile('{{ folder_name }}', '{{ file }}')" class="run-btn">
+                    <i class="fas fa-play"></i> Run
+                </button>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-folder-open" style="font-size: 50px; opacity: 0.3; margin-bottom: 15px;"></i>
+            <p>No batch files available in this folder.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Result Modal -->
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">×</span>
+            <div id="modal-header">
+                <h3 id="result-title">Batch Execution Result</h3>
+            </div>
+            <div id="result-content">
+                <pre id="result-output"></pre>
+            </div>
+            <div class="modal-footer">
+                <button class="ok-btn" onclick="document.getElementById('resultModal').style.display='none'">OK</button>
+                <a id="downloadOutputBtn" class="btn" style="display: none;" href="#">
+                    <i class="fas fa-download"></i> Download Output File
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer.html' %}
+
+    <!-- JavaScript for AJAX and Modal -->
+    <script src="/static/script/folder.js"></script>
+    <script src="/static/script/global.js"></script>
+</body>
+
+</html>

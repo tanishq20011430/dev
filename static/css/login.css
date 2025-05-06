@@ -1,0 +1,245 @@
+:root {
+    --primary: #000000;
+    --secondary: #333333;
+    --light: #f4f4f4;
+    --white: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light);
+    color: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("{{ url_for('static', filename='logo.png') }}");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+    background-color: rgba(244, 244, 244, 0.96);
+}
+
+.login-container {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px var(--shadow);
+    text-align: center;
+    width: 320px;
+    position: relative;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo i {
+    color: var(--primary);
+    font-size: 28px;
+    margin-right: 10px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.login-container h2 {
+    margin-top: 0;
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.login-container form {
+    margin-top: 25px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    color: #999;
+}
+
+.login-container input {
+    display: block;
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.login-container input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.error {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #000000;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.error i {
+    margin-right: 8px;
+}
+
+@media (max-width: 400px) {
+    .login-container {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+.header .logo {
+    font-size: 20px;
+    /* Reduced from 24px */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Allow wrapping if needed */
+}
+
+@media (max-width: 768px) {
+    .header .logo {
+        font-size: 16px;
+        /* Smaller on mobile */
+    }
+}
+
+:root {
+    --primary: #000000;
+    --secondary: #000000;
+    --light: #f5f5f5;
+    --white: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding-bottom: 60px;
+    /* Prevents content from being hidden behind footer */
+    background-color: var(--light);
+    color: var(--primary);
+    line-height: 1.6;
+    min-height: 100%;
+}
+
+/* .footer {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 15px px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.footer .copyright {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+.footer .footer-logo {
+    margin-right: 10px;
+    height: 30px;
+} */
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 5px 0;
+    }
+
+    .footer .copyright {
+        font-size: 10px;
+    }
+
+    .footer .footer-logo {
+        height: 16px;
+    }
+}
+
+/*copywrite symbol adjustments*/
+.copyright-symbol {
+    transform: translateY(-5px);
+    /* Moves the © upward by 5 pixels */
+    margin-right: 1px;
+}
+
+@media (max-width: 768px) {
+    .copyright-symbol {
+        transform: translateY(-1px);
+        /* Less movement on mobile */
+        margin-right: 3px;
+    }
+}
